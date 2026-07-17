@@ -102,17 +102,17 @@ label.destaque .mestra{display:block; font-size:12px; font-weight:600; color:var
 .chip.on{border-color:var(--link); outline:3px solid #BCD6EA}
 .chip small{display:block; font-weight:500; color:var(--muted); font-size:10.5px}
 
-.idrow{display:flex; align-items:center; justify-content:flex-start; gap:16px; margin-top:10px; flex-wrap:wrap}
-.idcol{display:flex; flex-direction:column; gap:8px; min-width:180px}
+.idrow{display:flex; align-items:flex-start; justify-content:flex-start; gap:16px; margin-top:10px; flex-wrap:wrap}
+.idcol{display:flex; flex-direction:column; gap:8px; min-width:180px; flex:1}
 .idcol .btn{width:100%}
 .kpMini{display:grid; grid-template-columns:repeat(3,56px); gap:8px; flex-shrink:0}
 .kpMini button{width:56px; height:56px; border-radius:12px; border:1.5px solid var(--line); background:#fff; font-weight:800; font-size:20px; color:var(--navy); cursor:pointer}
 .kpMini button:active{background:var(--link-bg)}
 .kpMini button.letra{color:var(--gold); border-color:var(--gold)}
 .kpMini button.del{color:#C0392B; font-size:16px}
-#inpID, .numDestaque{font-size:26px; text-align:center; padding:14px 20px; border-radius:12px; border:2.5px solid var(--navy); font-family:'IBM Plex Mono',monospace; letter-spacing:.09em; box-shadow:0 0 0 5px rgba(21,42,82,0.10); min-width:180px; max-width:240px}
+#inpID, .numDestaque{font-size:26px; text-align:center; padding:14px 20px; border-radius:12px; border:2.5px solid var(--navy); font-family:'IBM Plex Mono',monospace; letter-spacing:.09em; box-shadow:0 0 0 5px rgba(21,42,82,0.10); min-width:180px; width:100%}
 @media (max-width:480px){ .kpMini{grid-template-columns:repeat(3,44px)} .kpMini button{width:44px;height:44px;font-size:15px} #inpID, .numDestaque{font-size:21px; min-width:140px; padding:11px 14px} }
-.idrow input{flex:1; font-family:'IBM Plex Mono'; font-size:22px; letter-spacing:.08em; text-align:center; text-transform:uppercase}
+.idrow input{font-family:'IBM Plex Mono'; font-size:22px; letter-spacing:.08em; text-align:center; text-transform:uppercase}
 .btn{min-height:48px; padding:0 18px; border:none; border-radius:9px; cursor:pointer; font-size:14px; font-weight:700; letter-spacing:.02em}
 .btn-navy{background:var(--navy); color:#fff}
 .btn-gold{background:var(--gold); color:var(--navy)}
@@ -127,6 +127,8 @@ label.destaque .mestra{display:block; font-size:12px; font-weight:600; color:var
 .sizes button.on{border-color:var(--link); background:var(--link-bg); color:var(--link)}
 .qty{display:flex; align-items:center; gap:12px; margin-top:8px; flex-wrap:wrap}
 .confDigit{display:flex; gap:16px; align-items:flex-start; flex-wrap:wrap; margin:14px 0}
+.pecaAtualBox{width:100%; background:var(--navy); color:#fff; font-weight:800; font-size:16px; text-align:center; letter-spacing:.3px; padding:15px 20px; border-radius:12px; margin-bottom:10px}
+.pecaAtualBox .mestraInfo{display:block; font-size:11.5px; font-weight:600; color:#CFE0F5; margin-top:4px; letter-spacing:0; text-transform:none}
 .kp{display:grid; grid-template-columns:repeat(3,56px); gap:8px; flex-shrink:0}
 .kpBtn{width:56px; height:56px; border-radius:12px; border:1.5px solid var(--line); background:#fff; font-size:20px; font-weight:800; color:var(--navy); cursor:pointer}
 .kpBtn:active{background:var(--link-bg)}
@@ -329,6 +331,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
       <button class="acao" onclick="atualizarPagina()" title="Atualizar dados sem perder a seção em andamento">🔄 Atualizar</button>
       <button class="acao" onclick="salvarSessao()" title="Salva o lançamento em andamento (saída ou conferência) para continuar depois">💾 Salvar sessão</button>
       <button class="acao" onclick="abreAdmin()" title="Área do administrador">🛡 Admin</button>
+      <button class="acao" onclick="fecharApp()" title="Salva o que foi digitado e fecha o app">✖ Fechar app</button>
     </div>
   </div>
   <div class="verseStrip" id="verseStrip"></div>
@@ -355,7 +358,6 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
     <div class="chips" id="chipsOutros"></div>
 
     <div id="entradaID" style="display:none">
-      <label id="lblNumero" class="destaque">Número identificador</label>
       <div class="idrow">
         <div class="kpMini" id="kpMiniID">
           <button onclick="teclaID('1')">1</button><button onclick="teclaID('2')">2</button><button onclick="teclaID('3')">3</button>
@@ -364,6 +366,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
           <button class="letra" onclick="teclaID('A')">A</button><button onclick="teclaID('0')">0</button><button class="del" onclick="teclaID('DEL')">⌫</button>
         </div>
         <div class="idcol">
+          <div class="pecaAtualBox" id="lblNumero">Número identificador</div>
           <input type="text" id="inpID" autocomplete="off" autocapitalize="characters" readonly inputmode="none" placeholder="0001" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}">
           <button class="btn btn-navy" onclick="addNumero()">＋ Adicionar</button>
         </div>
@@ -376,7 +379,6 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
         <label>Tamanho</label>
         <div class="sizes" id="sizes"></div>
       </div>
-      <label class="destaque">Quantidade de unidades</label>
       <div class="idrow">
         <div class="kpMini" id="kpMiniQtd">
           <button onclick="teclaGen('qtdCampo','1')">1</button><button onclick="teclaGen('qtdCampo','2')">2</button><button onclick="teclaGen('qtdCampo','3')">3</button>
@@ -385,6 +387,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
           <button onclick="teclaGen('qtdCampo','0')">0</button><button class="del" onclick="teclaGen('qtdCampo','DEL')">⌫</button>
         </div>
         <div class="idcol">
+          <div class="pecaAtualBox" id="lblQtd">Quantidade de unidades</div>
           <input type="text" id="qtdCampo" class="numDestaque" readonly inputmode="none" placeholder="1" oninput="setQtdCampo(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}" title="Digite a quantidade pelo teclado do app">
           <button class="btn btn-navy" onclick="addNumero()">＋ Adicionar</button>
         </div>
@@ -408,7 +411,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
 <section id="secConf">
   <div class="card">
     <h2>Conferência de retorno</h2>
-    <p class="hint">Escolha o lote que voltou da lavanderia e toque nos quadrinhos conforme as peças chegam. Cada quadrinho é uma peça física; cada bloco tracejado é um exemplar do número.</p>
+    <p class="hint">Escolha o lote que voltou da lavanderia e digite, pelo teclado do app, o número ou a quantidade de cada peça conforme ela chega.</p>
     <div class="lote-pick" id="lotePick"></div>
   </div>
   <div id="confArea"></div>
@@ -603,6 +606,16 @@ function salvarSessao(){
   if(rascunho.length) partes.push(rascunho.length+' item(ns) no rascunho da saída');
   if(loteAberto) partes.push('conferência do lote '+loteAberto+' em andamento');
   toast(partes.length? '💾 Sessão salva: '+partes.join(' · ')+'.' : '💾 Sessão salva (sem lançamento em andamento).', 'success');
+}
+function fecharApp(){
+  salvarSessao();
+  toast('💾 Dados salvos. Fechando o app…', 'success');
+  setTimeout(()=>{
+    window.close();
+    setTimeout(()=>{
+      toast('Tudo salvo — pode fechar o app com segurança pelo botão de apps recentes do tablet.', 'info');
+    }, 500);
+  }, 500);
 }
 /** Aplica uma sessão salva (chamado uma vez, no carregamento da página). */
 function restauraSessao(){
@@ -825,9 +838,10 @@ function selCat(k){
     const mestre = (masterLists[k]||[]).length;
     document.getElementById('lblNumero').innerHTML =
       'Número identificador — '+labelFor(k)
-      + '<span class="mestra">'+(mestre? '📋 Lista mestra: '+mestre+' números válidos' : '⚠ Sem lista mestra — aceita qualquer número')+'</span>';
+      + '<span class="mestraInfo">'+(mestre? '📋 Lista mestra: '+mestre+' números válidos' : '⚠ Sem lista mestra — aceita qualquer número')+'</span>';
     document.getElementById('inpID').focus();
   } else {
+    document.getElementById('lblQtd').textContent = 'Quantidade de unidades — '+labelFor(k);
     document.getElementById('tamWrap').style.display = d.porTamanho? 'block':'none';
     if(d.porTamanho) renderSizes();
     qtdSel = 1; syncQtd();
@@ -1133,7 +1147,7 @@ function confirmaNumeroConf(cat, grupoKey){
   renderTudo(true);
   setTimeout(()=>{ const i2=document.getElementById('confNumInp_'+grupoKey); if(i2) i2.focus(); }, 20);
 }
-function painelKeypad(cat, grupoKey){
+function painelKeypad(cat, grupoKey, labelPeca){
   const tecKeys = ['1','2','3','4','5','6','7','8','9','A','0','⌫'];
   const kp = tecKeys.map(k=>{
     const del = k==='⌫';
@@ -1142,6 +1156,7 @@ function painelKeypad(cat, grupoKey){
   return '<div class="confDigit">'
     +'<div class="kp">'+kp+'</div>'
     +'<div class="confNumBox">'
+      +'<div class="pecaAtualBox">'+labelPeca+'</div>'
       +'<label>Número da peça</label>'
       +'<input type="text" id="confNumInp_'+grupoKey+'" autocomplete="off" autocapitalize="characters" readonly inputmode="none" placeholder="0001" '
       +'onkeydown="if(event.key===\'Enter\'){event.preventDefault();confirmaNumeroConf(\''+cat+'\',\''+grupoKey+'\')}">'
@@ -1164,7 +1179,7 @@ function grupoConfNumerado(titulo, defsArr, l, grupoKey){
     +'<select onchange="mudaCatConf(\''+grupoKey+'\',this.value)" style="font-size:11.5px; padding:5px 8px; border-radius:8px; border:none; font-weight:700; text-transform:none; width:130px; max-width:38vw">'+opts+'</select>'
     +'<span>'+titulo+'</span>'
     +'</div>'
-    + painelKeypad(atual, grupoKey)
+    + painelKeypad(atual, grupoKey, labelFor(atual))
     + (log? '<div class="miniTags">'+log+'</div>' : '<div class="vazio" style="margin-top:6px">Nenhuma peça confirmada ainda em '+labelFor(atual)+'.</div>');
 }
 function decrementaRecebidoConf(ix){
@@ -1216,7 +1231,7 @@ function decrementaRecebidoQtdConf(realIx){
   renderTudo(true);
 }
 function mudaTamConf(tam){ confOutroTam = tam; renderConf(); }
-function painelKeypadQtd(realIx){
+function painelKeypadQtd(realIx, labelPeca){
   const tecKeys = ['1','2','3','4','5','6','7','8','9','0','⌫'];
   const kp = tecKeys.map(k=>{
     const del = k==='⌫';
@@ -1225,6 +1240,7 @@ function painelKeypadQtd(realIx){
   return '<div class="confDigit">'
     +'<div class="kp">'+kp+'</div>'
     +'<div class="confNumBox">'
+      +'<div class="pecaAtualBox">'+labelPeca+'</div>'
       +'<label>Quantidade recebida</label>'
       +'<input type="text" id="confQtdInp" autocomplete="off" readonly inputmode="none" placeholder="1" '
       +'onkeydown="if(event.key===\'Enter\'){event.preventDefault();enviaQtdConf('+realIx+')}">'
@@ -1257,7 +1273,7 @@ function grupoConfQuantidade(titulo, defsArr, l){
     const log = rec>0 ? '<div class="miniTags"><span class="tag"><span class="sw" style="background:'+def(atual).cor+'"></span>'
       +(itAlvo.tam?'Tam. '+itAlvo.tam:labelFor(atual))+' <span class="mult">×'+rec+'</span>'
       +'<button class="minus" onclick="decrementaRecebidoQtdConf('+realIx+')" title="Tirar uma peça">−1</button></span></div>' : '';
-    corpo = seletorTam + painelKeypadQtd(realIx) + log;
+    corpo = seletorTam + painelKeypadQtd(realIx, labelFor(atual)+(itAlvo.tam?' · Tam. '+itAlvo.tam:'')) + log;
   }
   return '<div class="grupo">'
     +'<select onchange="mudaCatConf(\'outros\',this.value)" style="font-size:11.5px; padding:5px 8px; border-radius:8px; border:none; font-weight:700; text-transform:none; width:130px; max-width:38vw">'+opts+'</select>'
@@ -2007,7 +2023,7 @@ function renderRelatorio(){
         +'<td class="num">'+tExp+'</td><td class="num">'+tDev+'</td><td class="num">'+tFal+'</td></tr></tfoot>'
     +'</table>'
     +'<div class="rel-sign"><div><div class="line">Responsável pelo envio</div>'+(lotes.length===1?lotes[0].responsavel:'')+'</div>'
-      +'<div><div class="line">Conferência / Lavanderia</div>'+(lotes.length===1?(lotes[0].conferidoPor||''):'')+'</div></div>'
+      +'<div><div class="line">Conferência / Lavanderia</div></div></div>'
     +'</div>';
 
   // Preenche o assunto e o cabeçalho de e-mail se ainda estiverem vazios
@@ -2138,7 +2154,15 @@ function trocaVersiculo(secao){
   }, 180);
 }
 
+let pendRelDesbloqueado = (sess.get('uniformes_pendrel_unlocked')==='1');
 function mudaAba(a){
+  if((a==='pend' || a==='rel') && !pendRelDesbloqueado){
+    const senha = prompt('Área restrita — digite a senha de administrador para acessar '+(a==='pend'?'Pendências':'Relatório')+':');
+    if(senha===null) return;
+    if(senha !== ADMIN_PASSWORD){ toast('Senha de administrador incorreta.', 'error'); return; }
+    pendRelDesbloqueado = true;
+    sess.set('uniformes_pendrel_unlocked','1');
+  }
   const map = {envio:'secEnvio', conf:'secConf', pend:'secPend', rel:'secRel'};
   Object.keys(map).forEach(x=>document.getElementById(map[x]).classList.toggle('on', x===a));
   document.getElementById('tabEnvio').classList.toggle('on', a==='envio');
