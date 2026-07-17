@@ -364,7 +364,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
           <button class="letra" onclick="teclaID('A')">A</button><button onclick="teclaID('0')">0</button><button class="del" onclick="teclaID('DEL')">⌫</button>
         </div>
         <div class="idcol">
-          <input type="text" id="inpID" autocomplete="off" autocapitalize="characters" placeholder="0001" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}">
+          <input type="text" id="inpID" autocomplete="off" autocapitalize="characters" readonly inputmode="none" placeholder="0001" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}">
           <button class="btn btn-navy" onclick="addNumero()">＋ Adicionar</button>
         </div>
       </div>
@@ -385,7 +385,7 @@ footer{position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--n
           <button onclick="teclaGen('qtdCampo','0')">0</button><button class="del" onclick="teclaGen('qtdCampo','DEL')">⌫</button>
         </div>
         <div class="idcol">
-          <input type="text" id="qtdCampo" class="numDestaque" inputmode="numeric" placeholder="1" oninput="setQtdCampo(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}" title="Digite a quantidade">
+          <input type="text" id="qtdCampo" class="numDestaque" readonly inputmode="none" placeholder="1" oninput="setQtdCampo(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();addNumero();}" title="Digite a quantidade pelo teclado do app">
           <button class="btn btn-navy" onclick="addNumero()">＋ Adicionar</button>
         </div>
       </div>
@@ -882,7 +882,7 @@ function renderServicos(){
       + '<div class="idrow" style="margin-top:0">'
       + kpMiniHtml('svcVal_'+sv, !soQtd)
       + '<div class="idcol" style="min-width:150px">'
-      + '<input id="svcVal_'+sv+'" class="numDestaque"'+(soQtd?' inputmode="numeric"':'')+' placeholder="'+(soQtd?'1':'—')+'" '
+      + '<input id="svcVal_'+sv+'" class="numDestaque" readonly inputmode="none" placeholder="'+(soQtd?'1':'—')+'" '
       + 'onkeydown="if(event.key===\'Enter\'){event.preventDefault();addServico(\''+sv+'\');}">'
       + '<button class="btn btn-navy" onclick="addServico(\''+sv+'\')">＋ Adicionar</button>'
       + '</div></div>'
@@ -1143,7 +1143,7 @@ function painelKeypad(cat, grupoKey){
     +'<div class="kp">'+kp+'</div>'
     +'<div class="confNumBox">'
       +'<label>Número da peça</label>'
-      +'<input type="text" id="confNumInp_'+grupoKey+'" autocomplete="off" autocapitalize="characters" placeholder="0001" '
+      +'<input type="text" id="confNumInp_'+grupoKey+'" autocomplete="off" autocapitalize="characters" readonly inputmode="none" placeholder="0001" '
       +'onkeydown="if(event.key===\'Enter\'){event.preventDefault();confirmaNumeroConf(\''+cat+'\',\''+grupoKey+'\')}">'
       +'<button class="btn btn-ok btn-block" style="margin-top:8px" onclick="confirmaNumeroConf(\''+cat+'\',\''+grupoKey+'\')">✓ Confirmar peça</button>'
     +'</div>'
@@ -1226,7 +1226,7 @@ function painelKeypadQtd(realIx){
     +'<div class="kp">'+kp+'</div>'
     +'<div class="confNumBox">'
       +'<label>Quantidade recebida</label>'
-      +'<input type="text" id="confQtdInp" autocomplete="off" inputmode="numeric" placeholder="1" '
+      +'<input type="text" id="confQtdInp" autocomplete="off" readonly inputmode="none" placeholder="1" '
       +'onkeydown="if(event.key===\'Enter\'){event.preventDefault();enviaQtdConf('+realIx+')}">'
       +'<button class="btn btn-ok btn-block" style="margin-top:8px" onclick="enviaQtdConf('+realIx+')">✓ Enviar</button>'
     +'</div>'
